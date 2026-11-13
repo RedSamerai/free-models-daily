@@ -32,6 +32,13 @@ def http_get_json(url, proxy=None, timeout=30):
     with opener.open(req, timeout=timeout) as r:
         return json.loads(r.read().decode("utf-8"))
 
+def http_get_text(url, proxy=None, timeout=30):
+    handler = urllib.request.ProxyHandler({"http": proxy, "https": proxy}) if proxy else urllib.request.ProxyHandler({})
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (free-models-daily)"})
+    opener = urllib.request.build_opener(handler)
+    with opener.open(req, timeout=timeout) as r:
+        return r.read().decode("utf-8", "replace")
+
 def http_head_ok(url, proxy=None, timeout=15):
     req = urllib.request.Request(url, method="HEAD", headers={"User-Agent": "Mozilla/5.0"})
     handler = urllib.request.ProxyHandler({"http": proxy, "https": proxy}) if proxy else urllib.request.ProxyHandler({})
@@ -96,19 +103,50 @@ def fetch_gh_releases():
     return {"ok": True, "items": out, "count": len(out)}
 
 # ---------- diff 状态 ----------
+def fetch_value_pricing():
+    """性价比层官方定价实抓：能抓到服务端价格就落活价(min–max)，抓不到标 ⚠️，不写死数字。"""
+    out = {}
+    for p in CONFIG.get("value_pricing", []):
+        vid = p["vendor"]; url = p.get("url", "")
+        proxy = PROXY_HF if p.get("proxy") in ("hf", True) else None
+        try:
+            html = http_get_text(url, proxy=proxy)
+            toks = re.findall(r"\$\d+(?:\.\d+)?", html)
+            nums = sorted({float(t[1:]) for t in toks})
+            if nums:
+                out[vid] = {"ok": True, "price": f"${nums[0]:g}–${nums[-1]:g}", "url": url}
+            else:
+                out[vid] = {"ok": False, "price": None, "url": url}
+        except Exception as e:
+            out[vid] = {"ok": False, "price": None, "url": url, "err": str(e)[:50]}
+    return out
+
 def sig_hash(items):
     return hashlib.md5(json.dumps(items, sort_keys=True).encode()).hexdigest()
 
 def load_state():
     p = os.path.join(ROOT, "state", "last_signals.json")
     if os.path.exists(p):
-        return json.load(open(p, encoding="utf-8"))
-    return {"openrouter": set(), "hf": set(), "gh": set(), "vendor_ids": set()}
+        d = json.load(open(p, encoding="utf-8"))
+        return {
+            "openrouter": set(d.get("openrouter", [])),
+            "hf": set(d.get("hf", [])),
+            "gh": {tuple(x) for x in d.get("gh", [])},
+            "vendor_ids": set(d.get("vendor_ids", [])),
+            "value_pricing": d.get("value_pricing", ""),
+        }
+    return {"openrouter": set(), "hf": set(), "gh": set(), "vendor_ids": set(), "value_pricing": ""}
 
 def save_state(st):
-    st = {k: sorted(v) for k, v in st.items()}
-    os.makedirs(os.path.dirname(os.path.join(ROOT,"state","last_signals.json")), exist_ok=True)
-    json.dump(st, open(os.path.join(ROOT, "state", "last_signals.json"), "w", encoding="utf-8"))
+    out = {
+        "openrouter": sorted(st["openrouter"]),
+        "hf": sorted(st["hf"]),
+        "gh": [list(t) for t in sorted(st["gh"])],
+        "vendor_ids": sorted(st["vendor_ids"]),
+        "value_pricing": st.get("value_pricing", ""),
+    }
+    os.makedirs(os.path.join(ROOT, "state"), exist_ok=True)
+    json.dump(out, open(os.path.join(ROOT, "state", "last_signals.json"), "w", encoding="utf-8"))
 
 # ---------- 翻译（AGNES）----------
 def translate_vendors():
@@ -158,7 +196,8 @@ LAYER_TITLE = {
   "video_value": ("高性价比生视频", "Cost-Effective Video"),
   "image_value": ("高性价比生图", "Cost-Effective Image"),
 }
-def build_registry(vendors, en, machine_or):
+def build_registry(vendors, en, machine_or, vp=None):
+    vp = vp or {}
     by = {}
     for v in vendors:
         by.setdefault(v["layer"], []).append(v)
@@ -179,7 +218,14 @@ def build_registry(vendors, en, machine_or):
                     parts.append(f"- `{h['id']}` ({h.get('likes',0)} 👍) [{h.get('created','')[:10]}]")
                 parts.append("")
         for v in by.get(layer, []):
-            parts.append(vendor_block(v, en))
+            block = vendor_block(v, en)
+            if layer in ("video_value", "image_value") and v["id"] in vp:
+                pr = vp[v["id"]]
+                if pr.get("ok"):
+                    block += f"\n- 单条价（实抓）：{pr['price']} /次·图（{pr['url']}，as of {datetime.date.today().isoformat()}）"
+                else:
+                    block += f"\n- 单条价：⚠️ unverified（{pr.get('url','官网定价页')} 实抓未命中）"
+            parts.append(block)
     open(os.path.join(ROOT, "registry", "models.md"), "w", encoding="utf-8").write("\n".join(parts))
 
 # ---------- daily ----------
@@ -267,9 +313,10 @@ if __name__ == "__main__":
     print(f"    openrouter free: {machine_or.get('count',0)} ok={machine_or.get('ok')}")
     print(f"    hf new: {fetch_hf_result.get('count',0)} ok={fetch_hf_result.get('ok')}")
     print(f"    gh releases: {gh.get('count',0)}")
+    vp = fetch_value_pricing()
+    print(f"    value pricing: {sum(1 for x in vp.values() if x.get('ok'))}/{len(vp)} live")
 
     st = load_state()
-    st = {k: set(v) for k, v in st.items()}
     or_ids = {m["id"] for m in machine_or["items"]}
     hf_ids = {h["id"] for h in fetch_hf_result["items"]}
     gh_keys = {(r["org_repo"], r.get("tag")) for r in gh["items"]}
@@ -284,15 +331,16 @@ if __name__ == "__main__":
     print("  AGNES: 翻译厂商条目为 EN ...")
     en = translate_vendors() if not dry else {}
 
-    build_registry(VENDORS, en, machine_or)
+    vp_sig = hashlib.md5(json.dumps(vp, sort_keys=True).encode()).hexdigest()
+    build_registry(VENDORS, en, machine_or, vp)
     has_update = build_daily([m for m in machine_or["items"] if m["id"] in new_or_ids],
                              [i for i in fetch_hf_result["items"] if i["id"] in new_hf],
                              [r for r in gh["items"] if (r["org_repo"], r.get("tag")) in new_gh],
-                             sorted(vend_added), today)
+                             sorted(vend_added), today) or (vp_sig != st.get("value_pricing", ""))
     update_readme(today, has_update)
 
     print(f"  has_update={has_update}")
-    save_state({"openrouter": or_ids, "hf": hf_ids, "gh": gh_keys, "vendor_ids": v_ids})
+    save_state({"openrouter": or_ids, "hf": hf_ids, "gh": gh_keys, "vendor_ids": v_ids, "value_pricing": vp_sig})
 
     if dry:
         print("  dry-run：不 commit。registry/daily 已生成，可检查。")

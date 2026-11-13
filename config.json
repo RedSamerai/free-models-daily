@@ -19,5 +19,14 @@
     "Comfy-Org/ComfyUI",
     "hpcaitech/Open-Sora"
   ],
-  "hf_scan": {"tags": ["text-to-video", "text-to-image"], "limit": 60}
+  "hf_scan": {"tags": ["text-to-video", "text-to-image"], "limit": 60, "min_likes": 3, "keep": 30},
+  "value_pricing": [
+    {"vendor": "fal_val", "url": "https://fal.ai/pricing", "proxy": "hf"},
+    {"vendor": "together_val", "url": "https://www.together.ai/pricing", "proxy": "hf"},
+    {"vendor": "grok_imagine", "url": "https://docs.x.ai/", "proxy": "hf"},
+    {"vendor": "kling_val", "url": "https://klingai.com/app/pricing"},
+    {"vendor": "seedance_val", "url": "https://www.volcengine.com/product/ark"},
+    {"vendor": "wan_val", "url": "https://help.aliyun.com/zh/model-studio/billing-of-model-studio"},
+    {"vendor": "siliconflow_val", "url": "https://cloud.siliconflow.cn/pricing"}
+  ]
 }
