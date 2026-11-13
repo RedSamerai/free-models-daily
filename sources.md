@@ -1,8 +1,8 @@
-# 数据源清单（sources.md · 全量 v2，待你审）
+# 数据源清单（sources.md · 全量）
 
 > 作用：pipeline 只在本清单范围内采集，不做全网乱搜。发现新厂商才增量追加。
 > 信任原则：只认活抓信号（API/页面/Releases/changelog 实抓），禁止 LLM 凭记忆写新闻。
-> 标记：✅ = 本会话已实抓可达；◻ = 待 OpenCode 配好时统一验活，验不过不进 registry。
+> 标记：✅ = 已实抓可达；◻ = 待验活（未逐一实抓），验不过不进 registry。
 > 国内站多直连可达；海外站部分需代理（HF 实测走 7897 通）。被 403/CF 挡多=数据中心 IP 被反爬，本地/代理能开，不算死。
 > 双语规则：需代理/科学上网 备注只写进 ZH 块，EN 块省略。
 
@@ -27,7 +27,7 @@
 ### 免费 LLM（llm-free）
 | 厂商 | 源 URL | 抓什么 | 状态 |
 |---|---|---|---|
-| AGNES AI（自留） | platform.agnes-ai.cn <br>apihub.agnes-ai.com | 免费模态、RPM、每日积分 | ✅ |
+| AGNES AI | platform.agnes-ai.cn <br>apihub.agnes-ai.com | 免费模态、RPM、每日积分 | ✅ |
 | 智谱 Z.ai / GLM | open.bigmodel.cn <br>国际 api.z.ai | 免费模型、0 元项、RPM | ✅ |
 | 硅基流动 SiliconFlow | cloud.siliconflow.cn <br>siliconflow.cn/pricing | 零价模型、赠金、实名要求 | ✅ |
 | 阿里百炼 | bailian.console.aliyun.com <br>价格/免费额度页 | 每模型 100万 token、90天有效 | ✅ |
@@ -118,7 +118,7 @@
 ## C. 策展 GitHub / HF org 清单（每天扫 release，喂「开源可本地」）
 
 > 每个 org 拉 releases + HF 对应 org 新模型。当日有 release = 可进当天"开源可本地"层。
-> org 会改名/迁移 → pipeline 做存在校验，失效自动标 ◻ 提醒你换，不静默丢。
+> org 会改名/迁移 → pipeline 做存在校验，失效自动跳过并记 log，不静默丢；需人工更新 config.json 的 curation_orgs。
 
 | 类别 | org（GitHub / HF） | 说明 |
 |---|---|---|
@@ -144,8 +144,9 @@
 
 ---
 
-## 待你定（审这份 source list）
-1. 厂商名单对不对：尤其 §B 性价比层，你不用管，我按活抓价排序列成品。
-2. §C 策展 org 清单补全后够不够（含 ollama/vLLM 等运行时）。
-3. §D web 兜底频率：默认每周 1 次，要更勤说一声。
-4. 有没有明确不想收的厂商（水/中转太多的）。
+## 维护说明
+
+- §B 性价比层按活抓价排序收录，直接列模型，不做「顶配 90%」对比标注。
+- §C 策展 org 清单含运行时类（ollama / vLLM / llama.cpp 等），重大 release 也可进日报。
+- §D web 兜底默认每周 1 次；命中先活抓官网确认，才进 registry。
+- 水/中转过多的厂商不入 §B / §C。
