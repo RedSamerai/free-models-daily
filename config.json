@@ -1,0 +1,23 @@
+{
+  "repo_path": "D:/My project/free-models-daily",
+  "git_remote": "https://github.com/RedSamerai/free-models-daily",
+  "commit_author": {"name": "RedSamerai", "email": "dingyi@example.com"},
+  "branch": "main",
+  "proxy": {"huggingface": "http://127.0.0.1:7897"},
+  "endpoints": {
+    "openrouter_models": "https://openrouter.ai/api/v1/models",
+    "hf_models": "https://huggingface.co/api/models",
+    "github_releases": "https://api.github.com/repos/{org}/{repo}/releases"
+  },
+  "curation_orgs": [
+    "Lightricks/LTX-Video",
+    "Tencent-Hunyuan/HunyuanVideo",
+    "Wan-Video/Wan2.1",
+    "black-forest-labs/flux",
+    "openai/gpt-oss",
+    "meta-llama/llama",
+    "Comfy-Org/ComfyUI",
+    "hpcaitech/Open-Sora"
+  ],
+  "hf_scan": {"tags": ["text-to-video", "text-to-image"], "limit": 60}
+}
