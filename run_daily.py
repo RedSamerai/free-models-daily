@@ -71,13 +71,14 @@ def fetch_openrouter_free():
 
 def fetch_hf_new():
     sc = CONFIG.get("hf_scan", {})
-    tags = ",".join(sc.get("tags", [])); lim = sc.get("limit", 60)
+    tags = ",".join(sc.get("tags", [])); lim = sc.get("limit", 60); min_likes = sc.get("min_likes", 3)
     url = f"{CONFIG['endpoints']['hf_models']}?filter={tags}&sort=createdAt&direction=-1&limit={lim}"
     try:
         rows = http_get_json(url, proxy=PROXY_HF)
-        items = [{"id": r.get("id"), "likes": r.get("likes"), "created": r.get("createdAt"),
-                  "tags": [t for t in (r.get("tags") or []) if t in ("text-to-video","text-to-image")]} for r in rows]
-        return {"ok": True, "items": items, "count": len(items)}
+        items = [{"id": r.get("id"), "likes": r.get("likes", 0), "created": r.get("createdAt"),
+                  "tags": [t for t in (r.get("tags") or []) if t in ("text-to-video","text-to-image")]}
+                 for r in rows if (r.get("likes") or 0) >= min_likes]
+        return {"ok": True, "items": items[:sc.get("keep", 30)], "count": len(items)}
     except Exception as e:
         return {"ok": False, "err": str(e), "items": []}
 
