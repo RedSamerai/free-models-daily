@@ -114,7 +114,8 @@ def fetch_value_pricing():
             toks = re.findall(r"\$\d+(?:\.\d+)?", html)
             nums = sorted({float(t[1:]) for t in toks})
             if nums:
-                out[vid] = {"ok": True, "price": f"${nums[0]:g}–${nums[-1]:g}", "url": url}
+                sample = "、".join(f"${n:g}" for n in nums[:4])
+                out[vid] = {"ok": True, "price": sample, "url": url}
             else:
                 out[vid] = {"ok": False, "price": None, "url": url}
         except Exception as e:
@@ -222,7 +223,7 @@ def build_registry(vendors, en, machine_or, vp=None):
             if layer in ("video_value", "image_value") and v["id"] in vp:
                 pr = vp[v["id"]]
                 if pr.get("ok"):
-                    block += f"\n- 单条价（实抓）：{pr['price']} /次·图（{pr['url']}，as of {datetime.date.today().isoformat()}）"
+                    block += f"\n- 实抓价目（节选，最低档起）：{pr['price']}（{pr['url']}，as of {datetime.date.today().isoformat()}）"
                 else:
                     block += f"\n- 单条价：⚠️ unverified（{pr.get('url','官网定价页')} 实抓未命中）"
             parts.append(block)
