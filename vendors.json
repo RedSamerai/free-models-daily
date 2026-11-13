@@ -9,6 +9,7 @@
   {"id":"cerebras","layer":"llm_free","name":"Cerebras","api":"cloud.cerebras.ai","key":"注册 → 加一次支付方式 → 免费 credit","limits":"$5 试用 credit，30 天过期；吞吐极高","notes":"需加卡（仅试用）"},
   {"id":"nim","layer":"llm_free","name":"NVIDIA NIM","api":"build.nvidia.com","key":"注册 NVIDIA Developer 计划 → 领 NIM key","limits":"100+ 开源模型，限流按模型动态（无公开表）","notes":"原型/研究用；生产需 NVIDIA AI Enterprise 授权"},
   {"id":"together","layer":"llm_free","name":"Together AI","api":"api.together.ai","key":"注册 → Settings → API keys","limits":"免费额度常变动（多为小额试用）","notes":"开源模型托管便宜档"},
+  {"id":"agnes","layer":"llm_free","name":"AGNES AI Hub","api":"apihub.agnes-ai.com/v1","key":"注册 agnes-ai.com → 领 API key","limits":"免费层含 agnes-flash 系列（具体免费模型/额度以官网为准）","notes":"国内可直连；本日报的 EN 翻译引擎即 agnes-3.0-flash（同源）"},
   {"id":"xfyun","layer":"llm_free","name":"科大讯飞星火","api":"open-platform.xfyun.cn","key":"注册 → 控制台 → 申请 APIKey","limits":"每模型约 20万 token 免费","notes":"国内可直连"},
   {"id":"kling","layer":"video_free","name":"快手 Kling（可灵）","api":"app.klingai.com","key":"登录 → 开发者中心 → API key","limits":"免费 66 分/日（登录发放）；免费 5s/720p 带水印","notes":"国内可直连；免费层禁商用；登录需手机号"},
   {"id":"hailuo","layer":"video_free","name":"MiniMax Hailuo（海螺）","api":"hailuoai.video","key":"注册 → 领免费额度 / 官方 API key","limits":"每日免费若干条；免费 720p","notes":"国内可直连；免费带水印"},
