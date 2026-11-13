@@ -262,14 +262,25 @@ def build_daily(new_or, new_hf, new_gh, vendors_added, today):
 
 # ---------- README 指向最新 daily ----------
 def update_readme(today, has_update):
-    d = os.path.join(ROOT, "daily"); files = sorted(os.listdir(d)) if os.path.isdir(d) else []
-    latest = files[-1] if files else f"{today}.md"
-    open(os.path.join(ROOT, "README.md"), "w", encoding="utf-8").write(
-        "# free-models-daily\n\n每日自动汇总「免费 + 高性价比」AI 模型 API（LLM / 视频 / 生图），中英双语。\n\n"
-        f"- 最新一期日报：[daily/{latest}](daily/{latest})\n"
-        f"- 常驻注册表：[registry/models.md](registry/models.md)\n\n"
-        "数据源与规则见 [SPEC.md](SPEC.md) · [sources.md](sources.md)。\n"
-        "生成：每日 03:00（北京时间）cron，机器实抓 + AGNES 翻译，QA 通过才自动提交。\n")
+    """只更新 README 里的 LATEST_DAILY 锚点块（指向最新一篇 daily/），不动其余正文。"""
+    d = os.path.join(ROOT, "daily")
+    files = sorted(f for f in os.listdir(d) if f.endswith(".md")) if os.path.isdir(d) else []
+    latest = files[-1] if files else None
+    if latest:
+        line = f"> 📄 最近更新 / Latest changelog：[`daily/{latest}`](daily/{latest})"
+    else:
+        line = "> 📄 全量活索引 / Full index：[`registry/models.md`](registry/models.md)"
+    p = os.path.join(ROOT, "README.md")
+    if not os.path.exists(p):
+        open(p, "w", encoding="utf-8").write(f"# free-models-daily\n\n{line}\n")
+        return
+    txt = open(p, encoding="utf-8").read()
+    if "<!-- LATEST_DAILY -->" in txt and "<!-- /LATEST_DAILY -->" in txt:
+        new = re.sub(r"(?s)<!-- LATEST_DAILY -->.*<!-- /LATEST_DAILY -->",
+                     f"<!-- LATEST_DAILY -->\n{line}\n<!-- /LATEST_DAILY -->", txt)
+        if new != txt:  # 只在链接确实变化时写，避免无谓 CRLF / 变更
+            open(p, "w", encoding="utf-8").write(new)
+    # 无锚点则不改动，避免覆盖富版 README
 
 # ---------- git ----------
 def git(*args, check=True):
