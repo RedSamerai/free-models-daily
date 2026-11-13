@@ -68,7 +68,7 @@ free-models-daily/
    - OpenRouter 免费池 = `GET https://openrouter.ai/api/v1/models` 过滤 `:free` / `price==0`（实时，不照抄第三方口径）。
    - Hugging Face = 官方 API：新模型（按 `text-to-video` / `text-to-image` 标签 + 时间窗）。
    - GitHub = 策展 org 清单（`config.json` 的 `curation_orgs`，见 sources.md §C）的 releases API（真实 release 对象 + 真实日期），喂「开源可本地」板块。
-   - 厂商价格 / 额度 / 停服 = 抓 sources.md 里列的官网价格页 / changelog / 官方博客。
+   - 厂商价格 / 额度 / 停服 = 抓 sources.md 里列的官网价格页 / changelog / 官方博客；**性价比层单条价实抓官方定价页**（`config.json.value_pricing`：能抓到落活价节选 + as-of，抓不到标 ⚠️，不写死数字）。
 2. **禁 LLM 记忆**：任何「并购 / 停服 / 新发布 / 参数规模」条目，必须来自**当天实际抓到的**官方 changelog / blog / press release，否则不进报告。
 3. **事实必挂 URL**：验活失败 → 标 `⚠️ unverified`，不当断言。
 4. **免费 ≠ 可商用**：商用边界在备注注明（Apache-2.0 自托管 = 可商用；官方免费层常禁商用 / 带水印）。
@@ -86,7 +86,7 @@ free-models-daily/
 ## 6. 每日 pipeline 与定时
 
 `run_daily.py` 单次运行（纯 stdlib，免依赖）：
-1. **实抓**：OpenRouter :free 池 / HF 最新开源文生视频·文生图（likes≥3）/ 策展 GitHub org releases。
+1. **实抓**：OpenRouter :free 池 / HF 最新开源文生视频·文生图（likes≥3）/ 策展 GitHub org releases / **性价比层官方定价页**（`config.json.value_pricing`）。
 2. **diff** 上期 `state/last_signals.json` → 分类新增（🆕）。
 3. **渲染**：`registry/models.md`（六板块 + 实抓池）+ `daily/YYYY-MM-DD.md`（当天新增，双语）。
 4. **翻译**：AGNES（`agnes-3.0-flash`）把 vendors.json 的 ZH 条目现场译成 EN 块；EN 块自动剔除漏入的 CN 专属 token（QA 门）。
@@ -96,6 +96,7 @@ free-models-daily/
 - `0 3 * * *`（UTC+8，即北京 03:00）主任务；`0 4 * * *` 备份任务（失败补跑）。
 - 通过 `D:\HermesData\scripts\free_models_daily.py` wrapper 调 `run_daily.py`；无 agent、静默运行（commit 即产出）。
 - 失败顺延：主任务异常时由 04:00 备份补跑，digest 窗口自动变 24–48h。
+- 周更（`every monday 3:30am`）：Hermes 定时任务 `free-models-daily-weekly-scrapers`（agent + web 搜索）兜底搜新厂商，活验（官网能开）后录入 `vendors.json` + `sources.md`，次日日报自动带出 EN 与 registry 条目。
 
 ---
 
@@ -103,4 +104,5 @@ free-models-daily/
 
 - **新厂商**：OpenRouter :free 池 / HF trending / 官方 changelog 命中「带免费层的新厂商」→ 追加 `sources.md` §B/§C + `vendors.json`，当天日报标 🆕。
 - **策展 org 失效**：org 改名 / 迁移时，pipeline 做存在校验、失效自动跳过并记 log，不静默丢；需人工更新 `config.json` 的 `curation_orgs`。
+- **配图**：不做 og / social card（无必要）。
 - **验收线**：每条 entry 有来源 URL 且验活通过（否则 `⚠️ unverified`）；数值带 `as of <date>`；EN 块无 CN 备注泄漏；`git log` 只有真实变更的 commit。
