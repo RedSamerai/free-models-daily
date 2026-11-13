@@ -28,5 +28,21 @@
   {"id":"grok_imagine","layer":"image_value","name":"xAI Grok Imagine","api":"console.x.ai","key":"xAI 控制台 → API key","limits":"按张付费（便宜档）","notes":"需代理"},
   {"id":"fal_val","layer":"image_value","name":"fal.ai（开源图/视频托管）","api":"fal.ai","key":"注册 → API key；有试用额度","limits":"开源模型按量极便宜（实抓价见下方）","notes":"需代理；开源模型最便宜档"},
   {"id":"together_val","layer":"image_value","name":"Together / Novita（便宜推理）","api":"api.together.ai · novita.ai","key":"注册 → API key","limits":"开源模型按量，极便宜","notes":"需代理"},
-  {"id":"siliconflow_val","layer":"image_value","name":"硅基流动（国产便宜档）","api":"api.siliconflow.cn","key":"注册 → API 密钥","limits":"开源模型按量；部分免费","notes":"国内可直连"}
+  {"id":"siliconflow_val","layer":"image_value","name":"硅基流动（国产便宜档）","api":"api.siliconflow.cn","key":"注册 → API 密钥","limits":"开源模型按量；部分免费","notes":"国内可直连"},
+  {"id":"hf_inf","layer":"llm_free","name":"Hugging Face Inference（免费层）","api":"huggingface.co/settings/tokens","key":"注册 HF → Settings → Access tokens","limits":"免费推理额度（按模型、限额小；以官网为准）","notes":"需代理；大量开源模型可在线推理；免信用卡"},
+  {"id":"sambanova","layer":"llm_free","name":"SambaNova Cloud","api":"cloud.sambanova.ai","key":"注册 → API keys","limits":"部分开源模型免费档（推理极快）；以官网为准","notes":"需代理"},
+  {"id":"grok","layer":"llm_free","name":"xAI Grok","api":"console.x.ai","key":"注册 xAI 控制台 → API key","limits":"免费层现状以官网为准（曾开放免费档）","notes":"需代理"},
+  {"id":"deepseek","layer":"llm_free","name":"DeepSeek","api":"platform.deepseek.com","key":"注册 → API keys","limits":"极低价格；部分模型免费/赠送额度以官网为准","notes":"国内可直连；便宜档主力"},
+  {"id":"cohere","layer":"llm_free","name":"Cohere","api":"dashboard.cohere.com","key":"注册 → API keys","limits":"免费试用额度（Chat/Rerank/Embed，以官网为准）","notes":"需代理；长上下文强"},
+  {"id":"luma","layer":"video_free","name":"Luma AI（Ray）","api":"lumalabs.ai","key":"登录 Luma → 每日免费积分","limits":"每日免费条数（以官网为准，带水印）","notes":"需代理"},
+  {"id":"pika","layer":"video_free","name":"Pika","api":"pika.art","key":"登录 Pika → 每日免费积分","limits":"每日免费条数（以官网为准，带水印）","notes":"需代理"},
+  {"id":"pixverse","layer":"video_free","name":"Pixverse","api":"pixverse.ai","key":"登录 Pixverse → 每日免费积分","limits":"每日免费条数（以官网为准，带水印）","notes":"需代理"},
+  {"id":"haiper","layer":"video_free","name":"Haiper","api":"haiper.ai","key":"登录 Haiper → 每日免费积分","limits":"每日免费条数（以官网为准，带水印）","notes":"需代理"},
+  {"id":"leonardo","layer":"image_free","name":"Leonardo","api":"app.leonardo.ai","key":"登录 Leonardo → 每日免费 token","limits":"每日免费额度（以官网为准，需刷新）","notes":"需代理；免费档够用"},
+  {"id":"ideogram","layer":"image_free","name":"Ideogram","api":"ideogram.ai","key":"登录 Ideogram → 每日免费额度","limits":"每日免费张数（以官网为准，带水印）","notes":"需代理；文字渲染强"},
+  {"id":"krea","layer":"image_free","name":"Krea","api":"krea.ai","key":"登录 Krea → 每日免费积分","limits":"每日免费积分（以官网为准）","notes":"需代理"},
+  {"id":"playground","layer":"image_free","name":"Playground","api":"playground.com","key":"登录 Playground → 免费额度","limits":"免费生成额度（以官网为准，可商用免费档）","notes":"需代理"},
+  {"id":"ms_designer","layer":"image_free","name":"Microsoft Designer（Bing Image）","api":"designer.microsoft.com","key":"登录 Microsoft 账号","limits":"每日免费额度（以官网为准）","notes":"需代理；免注册门槛低"},
+  {"id":"liblib","layer":"image_free","name":"LiblibAI（哩布哩布）","api":"liblib.art","key":"登录 → 每日免费算力","limits":"每日免费算力（生图，以官网为准）","notes":"国内可直连；国内模型社区"},
+  {"id":"replicate","layer":"image_value","name":"Replicate（便宜推理）","api":"replicate.com","key":"注册 → API tokens","limits":"按量计费（开源模型极便宜；以官网为准）","notes":"需代理；托管大量开源图/视频模型"}
 ]
