@@ -87,7 +87,7 @@ def agnes(prompt, max_tokens=4000, system="你是严谨的技术翻译，只输�
         except Exception as e:
             last = e
             if a < 2:
-                time.sleep(5 * (a + 1))
+                time.sleep(150)
     print(f"    AGNES 翻译重试后仍失败，本次 EN 降级为缺省: {last}")
     return {}
 
@@ -189,7 +189,7 @@ def translate_vendors():
     prompt = ("把这些中文 AI 模型厂商条目翻译成英文 JSON。输出 {id: {en_name,en_api,en_key,en_limits,en_notes}}。"
               "规则：EN 版必须省略任何中国专属备注（如 需代理/科学上网/国内直连/手机号/实名），只保留通用信息；"
               "忠实翻译，不要新增信息，不要机翻腔。只输出 JSON。")
-    data = agnes(prompt + "\n\n" + json.dumps(payload, ensure_ascii=False)) or {}
+    data = agnes(prompt + "\n\n" + json.dumps(payload, ensure_ascii=False), max_tokens=8000) or {}
     en = {}
     for vid, e in data.items():
         # QA: 从 EN 字段里清掉漏进来的 CN-only token
