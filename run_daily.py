@@ -26,18 +26,36 @@ PROXY_HF = CONFIG.get("proxy", {}).get("huggingface")
 CN_ONLY_TOKENS = ["需代理", "科学上网", "国内直连", "国内可直连", "手机号", "实名", "国内", "需翻墙"]
 
 def http_get_json(url, proxy=None, timeout=30):
-    req = urllib.request.Request(url, headers={"User-Agent": "free-models-daily/1.0", "Accept": "application/json"})
+    import time
     handler = urllib.request.ProxyHandler({"http": proxy, "https": proxy}) if proxy else urllib.request.ProxyHandler({})
     opener = urllib.request.build_opener(handler)
-    with opener.open(req, timeout=timeout) as r:
-        return json.loads(r.read().decode("utf-8"))
+    last = None
+    for a in range(3):
+        req = urllib.request.Request(url, headers={"User-Agent": "free-models-daily/1.0", "Accept": "application/json"})
+        try:
+            with opener.open(req, timeout=timeout) as r:
+                return json.loads(r.read().decode("utf-8"))
+        except Exception as e:
+            last = e
+            if a < 2:
+                time.sleep(3 * (a + 1))
+    raise last
 
 def http_get_text(url, proxy=None, timeout=30):
+    import time
     handler = urllib.request.ProxyHandler({"http": proxy, "https": proxy}) if proxy else urllib.request.ProxyHandler({})
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (free-models-daily)"})
     opener = urllib.request.build_opener(handler)
-    with opener.open(req, timeout=timeout) as r:
-        return r.read().decode("utf-8", "replace")
+    last = None
+    for a in range(3):
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (free-models-daily)"})
+        try:
+            with opener.open(req, timeout=timeout) as r:
+                return r.read().decode("utf-8", "replace")
+        except Exception as e:
+            last = e
+            if a < 2:
+                time.sleep(3 * (a + 1))
+    raise last
 
 def http_head_ok(url, proxy=None, timeout=15):
     req = urllib.request.Request(url, method="HEAD", headers={"User-Agent": "Mozilla/5.0"})
@@ -55,13 +73,23 @@ def agnes(prompt, max_tokens=4000, system="你是严谨的技术翻译，只输�
     body = json.dumps({"model": AGNES_MODEL,
                        "messages": [{"role": "system", "content": system}, {"role": "user", "content": prompt}],
                        "max_tokens": max_tokens, "temperature": 0.2}).encode()
-    req = urllib.request.Request(AGNES_BASE + "/chat/completions", data=body,
-                                headers={"Authorization": "Bearer " + AGNES_KEY, "Content-Type": "application/json"})
-    with urllib.request.urlopen(req, timeout=120, context=ssl.create_default_context()) as r:
-        data = json.loads(r.read().decode())
-    txt = data["choices"][0]["message"]["content"].strip()
-    m = re.search(r"\{.*\}", txt, re.DOTALL)
-    return json.loads(m.group(0)) if m else json.loads(txt)
+    import time
+    last = None
+    for a in range(3):
+        req = urllib.request.Request(AGNES_BASE + "/chat/completions", data=body,
+                                    headers={"Authorization": "Bearer " + AGNES_KEY, "Content-Type": "application/json"})
+        try:
+            with urllib.request.urlopen(req, timeout=120, context=ssl.create_default_context()) as r:
+                data = json.loads(r.read().decode())
+            txt = data["choices"][0]["message"]["content"].strip()
+            m = re.search(r"\{.*\}", txt, re.DOTALL)
+            return json.loads(m.group(0)) if m else json.loads(txt)
+        except Exception as e:
+            last = e
+            if a < 2:
+                time.sleep(5 * (a + 1))
+    print(f"    AGNES 翻译重试后仍失败，本次 EN 降级为缺省: {last}")
+    return {}
 
 # ---------- 机器实抓 ----------
 def fetch_openrouter_free():
@@ -161,7 +189,7 @@ def translate_vendors():
     prompt = ("把这些中文 AI 模型厂商条目翻译成英文 JSON。输出 {id: {en_name,en_api,en_key,en_limits,en_notes}}。"
               "规则：EN 版必须省略任何中国专属备注（如 需代理/科学上网/国内直连/手机号/实名），只保留通用信息；"
               "忠实翻译，不要新增信息，不要机翻腔。只输出 JSON。")
-    data = agnes(prompt + "\n\n" + json.dumps(payload, ensure_ascii=False))
+    data = agnes(prompt + "\n\n" + json.dumps(payload, ensure_ascii=False)) or {}
     en = {}
     for vid, e in data.items():
         # QA: 从 EN 字段里清掉漏进来的 CN-only token
@@ -196,6 +224,7 @@ LAYER_TITLE = {
   "image_free": ("免费生图", "Free Image Generation"),
   "video_value": ("高性价比生视频", "Cost-Effective Video"),
   "image_value": ("高性价比生图", "Cost-Effective Image"),
+  "audio_free": ("免费 TTS 语音", "Free TTS / Voice"),
 }
 def build_registry(vendors, en, machine_or, vp=None):
     vp = vp or {}

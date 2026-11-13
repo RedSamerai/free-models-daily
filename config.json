@@ -1,9 +1,14 @@
 {
   "repo_path": "D:/My project/free-models-daily",
   "git_remote": "https://github.com/RedSamerai/free-models-daily",
-  "commit_author": {"name": "RedSamerai", "email": "dingyi@example.com"},
+  "commit_author": {
+    "name": "RedSamerai",
+    "email": "dingyi@example.com"
+  },
   "branch": "main",
-  "proxy": {"huggingface": "http://127.0.0.1:7897"},
+  "proxy": {
+    "huggingface": "http://127.0.0.1:7897"
+  },
   "endpoints": {
     "openrouter_models": "https://openrouter.ai/api/v1/models",
     "hf_models": "https://huggingface.co/api/models",
@@ -19,14 +24,53 @@
     "Comfy-Org/ComfyUI",
     "hpcaitech/Open-Sora"
   ],
-  "hf_scan": {"tags": ["text-to-video", "text-to-image"], "limit": 60, "min_likes": 3, "keep": 30},
+  "hf_scan": {
+    "tags": [
+      "text-to-video",
+      "text-to-image"
+    ],
+    "limit": 60,
+    "min_likes": 3,
+    "keep": 30
+  },
   "value_pricing": [
-    {"vendor": "fal_val", "url": "https://fal.ai/pricing", "proxy": "hf"},
-    {"vendor": "together_val", "url": "https://www.together.ai/pricing", "proxy": "hf"},
-    {"vendor": "grok_imagine", "url": "https://docs.x.ai/", "proxy": "hf"},
-    {"vendor": "kling_val", "url": "https://klingai.com/app/pricing"},
-    {"vendor": "seedance_val", "url": "https://www.volcengine.com/product/ark"},
-    {"vendor": "wan_val", "url": "https://help.aliyun.com/zh/model-studio/billing-of-model-studio"},
-    {"vendor": "siliconflow_val", "url": "https://cloud.siliconflow.cn/pricing"}
+    {
+      "vendor": "fal_val",
+      "url": "https://fal.ai/pricing",
+      "proxy": "hf"
+    },
+    {
+      "vendor": "together_val",
+      "url": "https://www.together.ai/pricing",
+      "proxy": "hf"
+    },
+    {
+      "vendor": "grok_imagine",
+      "url": "https://docs.x.ai/",
+      "proxy": "hf"
+    },
+    {
+      "vendor": "kling_val",
+      "url": "https://klingai.com/app/pricing"
+    },
+    {
+      "vendor": "seedance_val",
+      "url": "https://www.volcengine.com/product/ark"
+    },
+    {
+      "vendor": "wan_val",
+      "url": "https://help.aliyun.com/zh/model-studio/billing-of-model-studio"
+    },
+    {
+      "vendor": "siliconflow_val",
+      "url": "https://cloud.siliconflow.cn/pricing"
+    }
+  ],
+  "discovery_feeds": [
+    {
+      "id": "awesome-ai-api-proxy",
+      "url": "https://raw.githubusercontent.com/howardpen9/awesome-ai-api-proxy/main/data/providers.yaml",
+      "note": "AI API 路由/中转站 活索引(约42家, schema: type=aggregator/official-relay/mixed/reverse/gateway-oss, status=active/unverified/inactive)。每周 diff；仅对【新的 aggregator/official-relay + active + 公网托管(个人中转站剔除)】条目 curl 活验后再加 curation。Unorouter 类聚合路由的母索引。"
+    }
   ]
 }

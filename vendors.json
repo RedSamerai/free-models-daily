@@ -1,48 +1,560 @@
 [
-  {"id":"gemini","layer":"llm_free","name":"Google Gemini（AI Studio）","api":"aistudio.google.com/app/apikey","key":"注册 Google 账号 → AI Studio → Get API key","limits":"免费层：Gemini Flash/Flash-Lite，RPM 5–15，部分模型每日上限","notes":"免费层数据可用于训练；部分地区需代理；免信用卡"},
-  {"id":"groq","layer":"llm_free","name":"Groq","api":"console.groq.com/keys","key":"Groq 控制台 → Keys → 新建","limits":"免费层：30 RPM / 1000 次/日（gpt-oss-120b）","notes":"速度最快（LPU）；免信用卡；商用可用"},
-  {"id":"zhipu","layer":"llm_free","name":"智谱 Z.ai / GLM","api":"open.bigmodel.cn","key":"注册 → 用户中心 → API keys","limits":"GLM-4.7-Flash 免费，1 并发；新用户 2000万 token 体验包","notes":"国内可直连；chat API 免实名（Batch 需实名）；国际站 api.z.ai"},
-  {"id":"siliconflow","layer":"llm_free","name":"硅基流动 SiliconFlow","api":"cloud.siliconflow.cn","key":"注册 → 账号 → API 密钥","limits":"新用户 2000万 token；部分开源模型永久免费","notes":"国内可直连；免费模型需实名认证；响应快"},
-  {"id":"bailian","layer":"llm_free","name":"阿里百炼（通义）","api":"bailian.console.aliyun.com","key":"开通百炼 → 授权 → 新建 API key","limits":"新用户每模型约 100万 token，90 天有效","notes":"国内可直连；模型最全（Qwen + 第三方）"},
-  {"id":"openrouter","layer":"llm_free","name":"OpenRouter（免费池）","api":"openrouter.ai/keys","key":"注册 → Keys → 新建（单 key 多模型）","limits":":free 模型 20 RPM / 50 次/日；充 10 美元后 1000 次/日","notes":"免信用卡；自动路由多厂商；免费模型每日轮换（脚本实抓）"},
-  {"id":"mistral","layer":"llm_free","name":"Mistral（La Plateforme）","api":"console.mistral.ai","key":"注册 → API keys","limits":"免费模式（Experiment）：约 1B token/月，限流看后台","notes":"API 数据不用于训练；免信用卡"},
-  {"id":"cerebras","layer":"llm_free","name":"Cerebras","api":"cloud.cerebras.ai","key":"注册 → 加一次支付方式 → 免费 credit","limits":"$5 试用 credit，30 天过期；吞吐极高","notes":"需加卡（仅试用）"},
-  {"id":"nim","layer":"llm_free","name":"NVIDIA NIM","api":"build.nvidia.com","key":"注册 NVIDIA Developer 计划 → 领 NIM key","limits":"100+ 开源模型，限流按模型动态（无公开表）","notes":"原型/研究用；生产需 NVIDIA AI Enterprise 授权"},
-  {"id":"together","layer":"llm_free","name":"Together AI","api":"api.together.ai","key":"注册 → Settings → API keys","limits":"免费额度常变动（多为小额试用）","notes":"开源模型托管便宜档"},
-  {"id":"agnes","layer":"llm_free","name":"AGNES AI Hub","api":"apihub.agnes-ai.com/v1","key":"注册 agnes-ai.com → 领 API key","limits":"免费层含 agnes-flash 系列（具体免费模型/额度以官网为准）","notes":"国内可直连；本日报的 EN 翻译引擎即 agnes-3.0-flash（同源）"},
-  {"id":"xfyun","layer":"llm_free","name":"科大讯飞星火","api":"open-platform.xfyun.cn","key":"注册 → 控制台 → 申请 APIKey","limits":"每模型约 20万 token 免费","notes":"国内可直连"},
-  {"id":"kling","layer":"video_free","name":"快手 Kling（可灵）","api":"app.klingai.com","key":"登录 → 开发者中心 → API key","limits":"免费 66 分/日（登录发放）；免费 5s/720p 带水印","notes":"国内可直连；免费层禁商用；登录需手机号"},
-  {"id":"hailuo","layer":"video_free","name":"MiniMax Hailuo（海螺）","api":"hailuoai.video","key":"注册 → 领免费额度 / 官方 API key","limits":"每日免费若干条；免费 720p","notes":"国内可直连；免费带水印"},
-  {"id":"jimeng","layer":"video_free","name":"字节 即梦 / Dreamina / Seedance","api":"jimeng.jianying.com","key":"注册即梦 → 生成；API 走火山方舟","limits":"免费每日积分（地域差异，美区约 120/日）","notes":"国内可直连；免费带水印；Seedance 走 API 付费"},
-  {"id":"vidu","layer":"video_free","name":"生数 Vidu","api":"platform.vidu.com","key":"注册 → 免费额度 / API key","limits":"每日免费条数 + 闲时档；带水印","notes":"国内可直连；按秒付费"},
-  {"id":"wan","layer":"video_free","name":"阿里 通义万相 Wan","api":"create.wan.video","key":"每日签到领 10 分；API 走百炼","limits":"约 1 条/日（720p/5s）；百炼新户免费秒数","notes":"国内可直连；签到制"},
-  {"id":"veo","layer":"video_free","name":"Google Veo / Gemini Omni / Flow","api":"flow.google.com","key":"注册 Google 账号 → Flow；API 走 ai.google.dev","limits":"免费 50 分/日（Veo 3.1 Lite）","notes":"部分地区需代理；免费带水印"},
-  {"id":"runway","layer":"video_free","name":"Runway（Gen-4）","api":"runway.com","key":"注册 → 一次性 125 分；API 需付费","limits":"一次性 125 分（非每日）","notes":"需代理；专业向"},
-  {"id":"stability","layer":"image_free","name":"Stability AI","api":"platform.stability.ai","key":"注册（建议 Google 登录才到账）→ 25 分","limits":"注册 25 分（约 3–10 张），无持续免费额度","notes":"需代理；之后按量付费"},
-  {"id":"flux","layer":"image_free","name":"FLUX（Black Forest Labs）","api":"fal.ai/models/black-forest-labs","key":"经 fal.ai / Hugging Face Spaces 免费调用 schnell","limits":"FLUX.1 schnell 常免费（每日额度，需排队）","notes":"需代理；开源权重可本地"},
-  {"id":"imagen","layer":"image_free","name":"Google Imagen / Nano Banana","api":"ai.google.dev","key":"AI Studio → Get API key","limits":"免费层可调用图像生成（限额小）","notes":"部分需代理"},
-  {"id":"metamuse","layer":"image_free","name":"Meta AI（Muse Image）","api":"meta.ai","key":"登录 Meta 账号即可","limits":"每日免费额度（不公布具体数）","notes":"移动端为主"},
-  {"id":"seedance_val","layer":"video_value","name":"字节 Seedance 2.x（火山）","api":"volcengine.com/ark","key":"开通火山方舟 → API key","limits":"按秒付费（实抓价见下方·官网）","notes":"国内可直连；性价比看分辨率/时长"},
-  {"id":"wan_val","layer":"video_value","name":"阿里 万相 Wan 3.0（百炼）","api":"bailian.console.aliyun.com","key":"百炼 API key","limits":"分分辨率按量；新户免费秒数","notes":"国内可直连"},
-  {"id":"kling_val","layer":"video_value","name":"快手 Kling（分分辨率价）","api":"app.klingai.com 开发者定价","key":"开发者中心 API key","limits":"分分辨率按量（实抓价见下方·官网）","notes":"国内可直连"},
-  {"id":"grok_imagine","layer":"image_value","name":"xAI Grok Imagine","api":"console.x.ai","key":"xAI 控制台 → API key","limits":"按张付费（便宜档）","notes":"需代理"},
-  {"id":"fal_val","layer":"image_value","name":"fal.ai（开源图/视频托管）","api":"fal.ai","key":"注册 → API key；有试用额度","limits":"开源模型按量极便宜（实抓价见下方）","notes":"需代理；开源模型最便宜档"},
-  {"id":"together_val","layer":"image_value","name":"Together / Novita（便宜推理）","api":"api.together.ai · novita.ai","key":"注册 → API key","limits":"开源模型按量，极便宜","notes":"需代理"},
-  {"id":"siliconflow_val","layer":"image_value","name":"硅基流动（国产便宜档）","api":"api.siliconflow.cn","key":"注册 → API 密钥","limits":"开源模型按量；部分免费","notes":"国内可直连"},
-  {"id":"hf_inf","layer":"llm_free","name":"Hugging Face Inference（免费层）","api":"huggingface.co/settings/tokens","key":"注册 HF → Settings → Access tokens","limits":"免费推理额度（按模型、限额小；以官网为准）","notes":"需代理；大量开源模型可在线推理；免信用卡"},
-  {"id":"sambanova","layer":"llm_free","name":"SambaNova Cloud","api":"cloud.sambanova.ai","key":"注册 → API keys","limits":"部分开源模型免费档（推理极快）；以官网为准","notes":"需代理"},
-  {"id":"grok","layer":"llm_free","name":"xAI Grok","api":"console.x.ai","key":"注册 xAI 控制台 → API key","limits":"免费层现状以官网为准（曾开放免费档）","notes":"需代理"},
-  {"id":"deepseek","layer":"llm_free","name":"DeepSeek","api":"platform.deepseek.com","key":"注册 → API keys","limits":"极低价格；部分模型免费/赠送额度以官网为准","notes":"国内可直连；便宜档主力"},
-  {"id":"cohere","layer":"llm_free","name":"Cohere","api":"dashboard.cohere.com","key":"注册 → API keys","limits":"免费试用额度（Chat/Rerank/Embed，以官网为准）","notes":"需代理；长上下文强"},
-  {"id":"luma","layer":"video_free","name":"Luma AI（Ray）","api":"lumalabs.ai","key":"登录 Luma → 每日免费积分","limits":"每日免费条数（以官网为准，带水印）","notes":"需代理"},
-  {"id":"pika","layer":"video_free","name":"Pika","api":"pika.art","key":"登录 Pika → 每日免费积分","limits":"每日免费条数（以官网为准，带水印）","notes":"需代理"},
-  {"id":"pixverse","layer":"video_free","name":"Pixverse","api":"pixverse.ai","key":"登录 Pixverse → 每日免费积分","limits":"每日免费条数（以官网为准，带水印）","notes":"需代理"},
-  {"id":"haiper","layer":"video_free","name":"Haiper","api":"haiper.ai","key":"登录 Haiper → 每日免费积分","limits":"每日免费条数（以官网为准，带水印）","notes":"需代理"},
-  {"id":"leonardo","layer":"image_free","name":"Leonardo","api":"app.leonardo.ai","key":"登录 Leonardo → 每日免费 token","limits":"每日免费额度（以官网为准，需刷新）","notes":"需代理；免费档够用"},
-  {"id":"ideogram","layer":"image_free","name":"Ideogram","api":"ideogram.ai","key":"登录 Ideogram → 每日免费额度","limits":"每日免费张数（以官网为准，带水印）","notes":"需代理；文字渲染强"},
-  {"id":"krea","layer":"image_free","name":"Krea","api":"krea.ai","key":"登录 Krea → 每日免费积分","limits":"每日免费积分（以官网为准）","notes":"需代理"},
-  {"id":"playground","layer":"image_free","name":"Playground","api":"playground.com","key":"登录 Playground → 免费额度","limits":"免费生成额度（以官网为准，可商用免费档）","notes":"需代理"},
-  {"id":"ms_designer","layer":"image_free","name":"Microsoft Designer（Bing Image）","api":"designer.microsoft.com","key":"登录 Microsoft 账号","limits":"每日免费额度（以官网为准）","notes":"需代理；免注册门槛低"},
-  {"id":"liblib","layer":"image_free","name":"LiblibAI（哩布哩布）","api":"liblib.art","key":"登录 → 每日免费算力","limits":"每日免费算力（生图，以官网为准）","notes":"国内可直连；国内模型社区"},
-  {"id":"replicate","layer":"image_value","name":"Replicate（便宜推理）","api":"replicate.com","key":"注册 → API tokens","limits":"按量计费（开源模型极便宜；以官网为准）","notes":"需代理；托管大量开源图/视频模型"}
+  {
+    "id": "gemini",
+    "layer": "llm_free",
+    "name": "Google Gemini（AI Studio）",
+    "api": "aistudio.google.com/app/apikey",
+    "key": "注册 Google 账号 → AI Studio → Get API key",
+    "limits": "免费层：Gemini Flash/Flash-Lite，RPM 5–15，部分模型每日上限",
+    "notes": "免费层数据可用于训练；部分地区需代理；免信用卡"
+  },
+  {
+    "id": "groq",
+    "layer": "llm_free",
+    "name": "Groq",
+    "api": "console.groq.com/keys",
+    "key": "Groq 控制台 → Keys → 新建",
+    "limits": "免费层：30 RPM / 1000 次/日（gpt-oss-120b）",
+    "notes": "速度最快（LPU）；免信用卡；商用可用"
+  },
+  {
+    "id": "zhipu",
+    "layer": "llm_free",
+    "name": "智谱 Z.ai / GLM",
+    "api": "open.bigmodel.cn",
+    "key": "注册 → 用户中心 → API keys",
+    "limits": "GLM-4.7-Flash 免费，1 并发；新用户 2000万 token 体验包",
+    "notes": "国内可直连；chat API 免实名（Batch 需实名）；国际站 api.z.ai"
+  },
+  {
+    "id": "siliconflow",
+    "layer": "llm_free",
+    "name": "硅基流动 SiliconFlow",
+    "api": "cloud.siliconflow.cn",
+    "key": "注册 → 账号 → API 密钥",
+    "limits": "新用户 2000万 token；部分开源模型永久免费",
+    "notes": "国内可直连；免费模型需实名认证；响应快"
+  },
+  {
+    "id": "bailian",
+    "layer": "llm_free",
+    "name": "阿里百炼（通义）",
+    "api": "bailian.console.aliyun.com",
+    "key": "开通百炼 → 授权 → 新建 API key",
+    "limits": "新用户每模型约 100万 token，90 天有效",
+    "notes": "国内可直连；模型最全（Qwen + 第三方）"
+  },
+  {
+    "id": "openrouter",
+    "layer": "llm_free",
+    "name": "OpenRouter（免费池）",
+    "api": "openrouter.ai/keys",
+    "key": "注册 → Keys → 新建（单 key 多模型）",
+    "limits": ":free 模型 20 RPM / 50 次/日；充 10 美元后 1000 次/日",
+    "notes": "免信用卡；自动路由多厂商；免费模型每日轮换（脚本实抓）"
+  },
+  {
+    "id": "mistral",
+    "layer": "llm_free",
+    "name": "Mistral（La Plateforme）",
+    "api": "console.mistral.ai",
+    "key": "注册 → API keys",
+    "limits": "免费模式（Experiment）：约 1B token/月，限流看后台",
+    "notes": "API 数据不用于训练；免信用卡"
+  },
+  {
+    "id": "cerebras",
+    "layer": "llm_free",
+    "name": "Cerebras",
+    "api": "cloud.cerebras.ai",
+    "key": "注册 → 加一次支付方式 → 免费 credit",
+    "limits": "$5 试用 credit，30 天过期；吞吐极高",
+    "notes": "需加卡（仅试用）"
+  },
+  {
+    "id": "nim",
+    "layer": "llm_free",
+    "name": "NVIDIA NIM",
+    "api": "build.nvidia.com",
+    "key": "注册 NVIDIA Developer 计划 → 领 NIM key",
+    "limits": "100+ 开源模型，限流按模型动态（无公开表）",
+    "notes": "原型/研究用；生产需 NVIDIA AI Enterprise 授权"
+  },
+  {
+    "id": "together",
+    "layer": "llm_free",
+    "name": "Together AI",
+    "api": "api.together.ai",
+    "key": "注册 → Settings → API keys",
+    "limits": "免费额度常变动（多为小额试用）",
+    "notes": "开源模型托管便宜档"
+  },
+  {
+    "id": "agnes",
+    "layer": "llm_free",
+    "name": "AGNES AI Hub",
+    "api": "apihub.agnes-ai.com/v1",
+    "key": "注册 agnes-ai.com → 领 API key",
+    "limits": "免费层含 agnes-flash 系列（具体免费模型/额度以官网为准）",
+    "notes": "国内可直连；本日报的 EN 翻译引擎即 agnes-3.0-flash（同源）"
+  },
+  {
+    "id": "xfyun",
+    "layer": "llm_free",
+    "name": "科大讯飞星火",
+    "api": "open-platform.xfyun.cn",
+    "key": "注册 → 控制台 → 申请 APIKey",
+    "limits": "每模型约 20万 token 免费",
+    "notes": "国内可直连"
+  },
+  {
+    "id": "kling",
+    "layer": "video_free",
+    "name": "快手 Kling（可灵）",
+    "api": "app.klingai.com",
+    "key": "登录 → 开发者中心 → API key",
+    "limits": "免费 66 分/日（登录发放）；免费 5s/720p 带水印",
+    "notes": "国内可直连；免费层禁商用；登录需手机号"
+  },
+  {
+    "id": "hailuo",
+    "layer": "video_free",
+    "name": "MiniMax Hailuo（海螺）",
+    "api": "hailuoai.video",
+    "key": "注册 → 领免费额度 / 官方 API key",
+    "limits": "每日免费若干条；免费 720p",
+    "notes": "国内可直连；免费带水印"
+  },
+  {
+    "id": "jimeng",
+    "layer": "video_free",
+    "name": "字节 即梦 / Dreamina / Seedance",
+    "api": "jimeng.jianying.com",
+    "key": "注册即梦 → 生成；API 走火山方舟",
+    "limits": "免费每日积分（地域差异，美区约 120/日）",
+    "notes": "国内可直连；免费带水印；Seedance 走 API 付费"
+  },
+  {
+    "id": "vidu",
+    "layer": "video_free",
+    "name": "生数 Vidu",
+    "api": "platform.vidu.com",
+    "key": "注册 → 免费额度 / API key",
+    "limits": "每日免费条数 + 闲时档；带水印",
+    "notes": "国内可直连；按秒付费"
+  },
+  {
+    "id": "wan",
+    "layer": "video_free",
+    "name": "阿里 通义万相 Wan",
+    "api": "create.wan.video",
+    "key": "每日签到领 10 分；API 走百炼",
+    "limits": "约 1 条/日（720p/5s）；百炼新户免费秒数",
+    "notes": "国内可直连；签到制"
+  },
+  {
+    "id": "veo",
+    "layer": "video_free",
+    "name": "Google Veo / Gemini Omni / Flow",
+    "api": "flow.google.com",
+    "key": "注册 Google 账号 → Flow；API 走 ai.google.dev",
+    "limits": "免费 50 分/日（Veo 3.1 Lite）",
+    "notes": "部分地区需代理；免费带水印"
+  },
+  {
+    "id": "runway",
+    "layer": "video_free",
+    "name": "Runway（Gen-4）",
+    "api": "runway.com",
+    "key": "注册 → 一次性 125 分；API 需付费",
+    "limits": "一次性 125 分（非每日）",
+    "notes": "需代理；专业向"
+  },
+  {
+    "id": "stability",
+    "layer": "image_free",
+    "name": "Stability AI",
+    "api": "platform.stability.ai",
+    "key": "注册（建议 Google 登录才到账）→ 25 分",
+    "limits": "注册 25 分（约 3–10 张），无持续免费额度",
+    "notes": "需代理；之后按量付费"
+  },
+  {
+    "id": "flux",
+    "layer": "image_free",
+    "name": "FLUX（Black Forest Labs）",
+    "api": "fal.ai/models/black-forest-labs",
+    "key": "经 fal.ai / Hugging Face Spaces 免费调用 schnell",
+    "limits": "FLUX.1 schnell 常免费（每日额度，需排队）",
+    "notes": "需代理；开源权重可本地"
+  },
+  {
+    "id": "imagen",
+    "layer": "image_free",
+    "name": "Google Imagen / Nano Banana",
+    "api": "ai.google.dev",
+    "key": "AI Studio → Get API key",
+    "limits": "免费层可调用图像生成（限额小）",
+    "notes": "部分需代理"
+  },
+  {
+    "id": "metamuse",
+    "layer": "image_free",
+    "name": "Meta AI（Muse Image）",
+    "api": "meta.ai",
+    "key": "登录 Meta 账号即可",
+    "limits": "每日免费额度（不公布具体数）",
+    "notes": "移动端为主"
+  },
+  {
+    "id": "seedance_val",
+    "layer": "video_value",
+    "name": "字节 Seedance 2.x（火山）",
+    "api": "volcengine.com/ark",
+    "key": "开通火山方舟 → API key",
+    "limits": "按秒付费（实抓价见下方·官网）",
+    "notes": "国内可直连；性价比看分辨率/时长"
+  },
+  {
+    "id": "wan_val",
+    "layer": "video_value",
+    "name": "阿里 万相 Wan 3.0（百炼）",
+    "api": "bailian.console.aliyun.com",
+    "key": "百炼 API key",
+    "limits": "分分辨率按量；新户免费秒数",
+    "notes": "国内可直连"
+  },
+  {
+    "id": "kling_val",
+    "layer": "video_value",
+    "name": "快手 Kling（分分辨率价）",
+    "api": "app.klingai.com 开发者定价",
+    "key": "开发者中心 API key",
+    "limits": "分分辨率按量（实抓价见下方·官网）",
+    "notes": "国内可直连"
+  },
+  {
+    "id": "grok_imagine",
+    "layer": "image_value",
+    "name": "xAI Grok Imagine",
+    "api": "console.x.ai",
+    "key": "xAI 控制台 → API key",
+    "limits": "按张付费（便宜档）",
+    "notes": "需代理"
+  },
+  {
+    "id": "fal_val",
+    "layer": "image_value",
+    "name": "fal.ai（开源图/视频托管）",
+    "api": "fal.ai",
+    "key": "注册 → API key；有试用额度",
+    "limits": "开源模型按量极便宜（实抓价见下方）",
+    "notes": "需代理；开源模型最便宜档"
+  },
+  {
+    "id": "together_val",
+    "layer": "image_value",
+    "name": "Together / Novita（便宜推理）",
+    "api": "api.together.ai · novita.ai",
+    "key": "注册 → API key",
+    "limits": "开源模型按量，极便宜",
+    "notes": "需代理"
+  },
+  {
+    "id": "siliconflow_val",
+    "layer": "image_value",
+    "name": "硅基流动（国产便宜档）",
+    "api": "api.siliconflow.cn",
+    "key": "注册 → API 密钥",
+    "limits": "开源模型按量；部分免费",
+    "notes": "国内可直连"
+  },
+  {
+    "id": "hf_inf",
+    "layer": "llm_free",
+    "name": "Hugging Face Inference（免费层）",
+    "api": "huggingface.co/settings/tokens",
+    "key": "注册 HF → Settings → Access tokens",
+    "limits": "免费推理额度（按模型、限额小；以官网为准）",
+    "notes": "需代理；大量开源模型可在线推理；免信用卡"
+  },
+  {
+    "id": "sambanova",
+    "layer": "llm_free",
+    "name": "SambaNova Cloud",
+    "api": "cloud.sambanova.ai",
+    "key": "注册 → API keys",
+    "limits": "部分开源模型免费档（推理极快）；以官网为准",
+    "notes": "需代理"
+  },
+  {
+    "id": "grok",
+    "layer": "llm_free",
+    "name": "xAI Grok",
+    "api": "console.x.ai",
+    "key": "注册 xAI 控制台 → API key",
+    "limits": "免费层现状以官网为准（曾开放免费档）",
+    "notes": "需代理"
+  },
+  {
+    "id": "deepseek",
+    "layer": "llm_free",
+    "name": "DeepSeek",
+    "api": "platform.deepseek.com",
+    "key": "注册 → API keys",
+    "limits": "极低价格；部分模型免费/赠送额度以官网为准",
+    "notes": "国内可直连；便宜档主力"
+  },
+  {
+    "id": "cohere",
+    "layer": "llm_free",
+    "name": "Cohere",
+    "api": "dashboard.cohere.com",
+    "key": "注册 → API keys",
+    "limits": "免费试用额度（Chat/Rerank/Embed，以官网为准）",
+    "notes": "需代理；长上下文强"
+  },
+  {
+    "id": "luma",
+    "layer": "video_free",
+    "name": "Luma AI（Ray）",
+    "api": "lumalabs.ai",
+    "key": "登录 Luma → 每日免费积分",
+    "limits": "每日免费条数（以官网为准，带水印）",
+    "notes": "需代理"
+  },
+  {
+    "id": "pika",
+    "layer": "video_free",
+    "name": "Pika",
+    "api": "pika.art",
+    "key": "登录 Pika → 每日免费积分",
+    "limits": "每日免费条数（以官网为准，带水印）",
+    "notes": "需代理"
+  },
+  {
+    "id": "pixverse",
+    "layer": "video_free",
+    "name": "Pixverse",
+    "api": "pixverse.ai",
+    "key": "登录 Pixverse → 每日免费积分",
+    "limits": "每日免费条数（以官网为准，带水印）",
+    "notes": "需代理"
+  },
+  {
+    "id": "haiper",
+    "layer": "video_free",
+    "name": "Haiper",
+    "api": "haiper.ai",
+    "key": "登录 Haiper → 每日免费积分",
+    "limits": "每日免费条数（以官网为准，带水印）",
+    "notes": "需代理"
+  },
+  {
+    "id": "leonardo",
+    "layer": "image_free",
+    "name": "Leonardo",
+    "api": "app.leonardo.ai",
+    "key": "登录 Leonardo → 每日免费 token",
+    "limits": "每日免费额度（以官网为准，需刷新）",
+    "notes": "需代理；免费档够用"
+  },
+  {
+    "id": "ideogram",
+    "layer": "image_free",
+    "name": "Ideogram",
+    "api": "ideogram.ai",
+    "key": "登录 Ideogram → 每日免费额度",
+    "limits": "每日免费张数（以官网为准，带水印）",
+    "notes": "需代理；文字渲染强"
+  },
+  {
+    "id": "krea",
+    "layer": "image_free",
+    "name": "Krea",
+    "api": "krea.ai",
+    "key": "登录 Krea → 每日免费积分",
+    "limits": "每日免费积分（以官网为准）",
+    "notes": "需代理"
+  },
+  {
+    "id": "playground",
+    "layer": "image_free",
+    "name": "Playground",
+    "api": "playground.com",
+    "key": "登录 Playground → 免费额度",
+    "limits": "免费生成额度（以官网为准，可商用免费档）",
+    "notes": "需代理"
+  },
+  {
+    "id": "ms_designer",
+    "layer": "image_free",
+    "name": "Microsoft Designer（Bing Image）",
+    "api": "designer.microsoft.com",
+    "key": "登录 Microsoft 账号",
+    "limits": "每日免费额度（以官网为准）",
+    "notes": "需代理；免注册门槛低"
+  },
+  {
+    "id": "liblib",
+    "layer": "image_free",
+    "name": "LiblibAI（哩布哩布）",
+    "api": "liblib.art",
+    "key": "登录 → 每日免费算力",
+    "limits": "每日免费算力（生图，以官网为准）",
+    "notes": "国内可直连；国内模型社区"
+  },
+  {
+    "id": "replicate",
+    "layer": "image_value",
+    "name": "Replicate（便宜推理）",
+    "api": "replicate.com",
+    "key": "注册 → API tokens",
+    "limits": "按量计费（开源模型极便宜；以官网为准）",
+    "notes": "需代理；托管大量开源图/视频模型"
+  },
+  {
+    "id": "unorouter",
+    "layer": "llm_free",
+    "name": "Unorouter（开源 LLM 聚合）",
+    "api": "api.unorouter.com/v1",
+    "key": "注册 unorouter.com → API key",
+    "limits": "160+ 个 :free 模型；免费 1 req/min/模型；以官网为准",
+    "notes": "北京可直连；OpenAI 兼容、单 key 路由多上游；全栈开源可审计"
+  },
+  {
+    "id": "cloudflare_ai",
+    "layer": "llm_free",
+    "name": "Cloudflare Workers AI / AI Gateway",
+    "api": "dash.cloudflare.com",
+    "key": "Cloudflare 账号 → API token",
+    "limits": "免费层含额度（限流以官网为准）",
+    "notes": "需代理；免信用卡；边缘推理"
+  },
+  {
+    "id": "github_models",
+    "layer": "llm_free",
+    "name": "GitHub Models",
+    "api": "models.github.ai",
+    "key": "GitHub 账号 → 免费 token",
+    "limits": "开源模型免费调用（限额/并发以官网为准）",
+    "notes": "需代理；免信用卡"
+  },
+  {
+    "id": "requesty",
+    "layer": "llm_free",
+    "name": "Requesty",
+    "api": "requesty.ai",
+    "key": "注册 → API key",
+    "limits": "免费模型约 200 req/日（以官网为准）",
+    "notes": "需代理；免信用卡；多模型路由"
+  },
+  {
+    "id": "kilo",
+    "layer": "llm_free",
+    "name": "Kilo Code（kilo-auto/free）",
+    "api": "kilo.ai",
+    "key": "注册（部分免 key）",
+    "limits": "free 池自动路由（限额以官网为准）",
+    "notes": "需代理；免信用卡"
+  },
+  {
+    "id": "llm7",
+    "layer": "llm_free",
+    "name": "LLM7.io",
+    "api": "token.llm7.io",
+    "key": "注册 → 领 token",
+    "limits": "API 网关免费层（以官网为准）",
+    "notes": "需代理"
+  },
+  {
+    "id": "ovh",
+    "layer": "llm_free",
+    "name": "OVHcloud AI Endpoints",
+    "api": "ovhcloud.com",
+    "key": "匿名即可（部分模型免 key）",
+    "limits": "免费匿名档 2 RPM/IP/模型（以官网为准）",
+    "notes": "需代理；EU 托管开源模型；免注册"
+  },
+  {
+    "id": "zsky",
+    "layer": "video_free",
+    "name": "ZSky AI",
+    "api": "zsky.ai",
+    "key": "注册 ZSky → API key",
+    "limits": "免费 REST 生成 1080p 视频（额度以官网为准）",
+    "notes": "需代理；免费层现状以官网为准"
+  },
+  {
+    "id": "hiapi",
+    "layer": "image_free",
+    "name": "hiapi.ai",
+    "api": "api.hiapi.ai",
+    "key": "注册 → API key",
+    "limits": "免费额度（含 GPT 图像）；以官网为准",
+    "notes": "需代理"
+  },
+  {
+    "id": "modelscope",
+    "layer": "image_free",
+    "name": "ModelScope（阿里 魔搭）",
+    "api": "modelscope.cn",
+    "key": "注册 → API key",
+    "limits": "Qwen-Image 等免费调用（非商用，以官网为准）",
+    "notes": "国内可直连；开源模型社区"
+  },
+  {
+    "id": "elevenlabs",
+    "layer": "audio_free",
+    "name": "ElevenLabs",
+    "api": "elevenlabs.io",
+    "key": "注册 → API key",
+    "limits": "免费约 1 万字符/月（不可商用；以官网为准）",
+    "notes": "需代理；音质顶尖"
+  },
+  {
+    "id": "gcloud_tts",
+    "layer": "audio_free",
+    "name": "Google Cloud TTS",
+    "api": "cloud.google.com/text-to-speech",
+    "key": "GCP 项目 → API key",
+    "limits": "WaveNet 每月 100 万字符免费（以官网为准）",
+    "notes": "需代理"
+  },
+  {
+    "id": "azure_tts",
+    "layer": "audio_free",
+    "name": "Azure Neural TTS",
+    "api": "learn.microsoft.com/azure/ai-services/speech-service",
+    "key": "Azure 账号 → Speech key",
+    "limits": "神经语音每月 50 万字符免费（以官网为准）",
+    "notes": "需代理"
+  },
+  {
+    "id": "aws_polly",
+    "layer": "audio_free",
+    "name": "Amazon Polly",
+    "api": "aws.amazon.com/polly",
+    "key": "AWS 账号（免费层前一年）",
+    "limits": "标准语音每月 500 万字符（前一年免费，以官网为准）",
+    "notes": "需代理"
+  },
+  {
+    "id": "inworld",
+    "layer": "audio_free",
+    "name": "Inworld",
+    "api": "platform.inworld.ai",
+    "key": "注册 → API key",
+    "limits": "免费 70 分钟 TTS + 100 自定义音色（以官网为准）",
+    "notes": "需代理；实时语音智能体"
+  },
+  {
+    "id": "fish_audio",
+    "layer": "audio_free",
+    "name": "Fish Audio",
+    "api": "fish.audio",
+    "key": "注册 → API key",
+    "limits": "免费层（个人使用，以官网为准）",
+    "notes": "需代理；中英音色多"
+  }
 ]
