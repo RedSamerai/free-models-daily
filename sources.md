@@ -50,6 +50,7 @@
 | 百度千帆 | cloud.baidu.com/qianfan | 新用户 100万/模型；国内直连 | ◻ |
 | 腾讯混元 / TokenHub | cloud.tencent.com | 免费额度；国内直连 | ◻ |
 | Kimi（月之暗面） | moonshot.cn | 免费额度；国内直连 | ◻ |
+| NovAI | aiapi-pro.com <br>api.aiapi-pro.com/v1/models | 5个免费模型（GLM/CogView/CogVideoX）；每日上限以官网为准 | ✅ |
 | 摩尔线程 / 七牛 | 各自官网 | 部分免费层 | ◻ |
 
 ### 免费生视频（video-free）

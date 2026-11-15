@@ -459,6 +459,15 @@
     "notes": "需代理；免信用卡"
   },
   {
+    "id": "novai",
+    "layer": "llm_free",
+    "name": "NovAI",
+    "api": "aiapi-pro.com",
+    "key": "注册 aiapi-pro.com → API key",
+    "limits": "5 个模型免费：glm-4.7-flash/glm-4.6v-flash/glm-4.1v-thinking-flash/cogview-3-flash(图)/cogvideox-flash(视频)；每日上限以官网为准",
+    "notes": "北京可直连；OpenAI 兼容；聚合中国前沿模型（DeepSeek/Qwen/GLM/Kimi等）；免费层实验确认可调用"
+  },
+  {
     "id": "llm7",
     "layer": "llm_free",
     "name": "LLM7.io",
