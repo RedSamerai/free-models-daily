@@ -108,6 +108,13 @@
 | 硅基流动 | api.siliconflow.cn | 国产便宜档，国内直连 | ✅ |
 | Stability / Luma | 各定价页 | 每张价 | ◻ |
 
+### 付费 LLM 聚合路由（llm-value）
+| 厂商 | 源 URL | 抓什么 | 状态 |
+|---|---|---|---|
+| Vercel AI Gateway | ai-gateway.vercel.sh/v1/models <br>vercel.com/docs/ai-gateway/pricing | $5/月免费额度；零加价按量；OpenAI兼容 | ✅ |
+| AIMLAPI | aimlapi.com <br>/best-ai-apis-for-free | 10M starter tokens；免费 playground；公开定价 | ◻ |
+| CloseAI | closeai-asia.com <br>/pricing | 企业级官方转发；1.1x~1.5x倍率；需预充值¥5000起 | ◻ |
+
 ### 开源可本地（oss-local）
 | 源 | 抓什么 | 状态 |
 |---|---|---|

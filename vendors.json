@@ -565,5 +565,14 @@
     "key": "注册 → API key",
     "limits": "免费层（个人使用，以官网为准）",
     "notes": "需代理；中英音色多"
+  },
+  {
+    "id": "vercel_ai",
+    "layer": "llm_value",
+    "name": "Vercel AI Gateway",
+    "api": "ai-gateway.vercel.sh/v1",
+    "key": "注册 Vercel 账号 → Dashboard → AI Gateway → Get API Key",
+    "limits": "免费层：$5/月额度；付费层按量，零加价",
+    "notes": "OpenAI 兼容网关；无预存费门槛；需 Vercel 账号（免信用卡可领免费额度）；定价见官网模型页"
   }
 ]
