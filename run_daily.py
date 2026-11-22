@@ -369,27 +369,33 @@ if __name__ == "__main__":
     vend_added = v_ids - st["vendor_ids"]
     print(f"  diff: +{len(new_or_ids)} openrouter, +{len(new_hf)} hf, +{len(new_gh)} gh-release, +{len(vend_added)} vendor")
 
+    vp_sig = hashlib.md5(json.dumps(vp, sort_keys=True).encode()).hexdigest()
+    price_changed = (vp_sig != st.get("value_pricing", ""))
+    diff_changed = bool(new_or_ids or new_hf or new_gh or vend_added)
+    has_update = diff_changed or price_changed
+    baseline_exists = os.path.exists(os.path.join(ROOT, "state", "last_signals.json.baseline"))
+    print(f"  has_update={has_update} (diff={diff_changed}, price_changed={price_changed})")
+
+    # 根治：无更新且 seed 已建 → 不翻译、不写任何文件、不提交，保持本地与远端一致
+    if not has_update and baseline_exists:
+        print("  无更新 → 不写文件、不 commit（本地保持干净）。")
+        print("done.")
+        sys.exit(0)
+
     print("  AGNES: 翻译厂商条目为 EN ...")
     en = translate_vendors() if not dry else {}
-
-    vp_sig = hashlib.md5(json.dumps(vp, sort_keys=True).encode()).hexdigest()
     build_registry(VENDORS, en, machine_or, vp)
-    has_update = build_daily([m for m in machine_or["items"] if m["id"] in new_or_ids],
-                             [i for i in fetch_hf_result["items"] if i["id"] in new_hf],
-                             [r for r in gh["items"] if (r["org_repo"], r.get("tag")) in new_gh],
-                             sorted(vend_added), today) or (vp_sig != st.get("value_pricing", ""))
+    build_daily([m for m in machine_or["items"] if m["id"] in new_or_ids],
+                [i for i in fetch_hf_result["items"] if i["id"] in new_hf],
+                [r for r in gh["items"] if (r["org_repo"], r.get("tag")) in new_gh],
+                sorted(vend_added), today)
     update_readme(today, has_update)
-
-    print(f"  has_update={has_update}")
     save_state({"openrouter": or_ids, "hf": hf_ids, "gh": gh_keys, "vendor_ids": v_ids, "value_pricing": vp_sig})
 
     if dry:
         print("  dry-run：不 commit。registry/daily 已生成，可检查。")
     else:
-        if has_update or not os.path.exists(os.path.join(ROOT, "state","last_signals.json.baseline")):
-            commit_push(today, has_update)
-            open(os.path.join(ROOT, "state", "last_signals.json.baseline"), "w").close()
-            print("  committed" + (" (seed)" if not has_update else ""))
-        else:
-            print("  无更新 → 跳过 commit（本期不提交）。")
+        commit_push(today, has_update)
+        open(os.path.join(ROOT, "state", "last_signals.json.baseline"), "w").close()
+        print("  committed" + (" (seed)" if not has_update else ""))
     print("done.")
