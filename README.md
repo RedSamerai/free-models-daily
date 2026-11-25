@@ -41,7 +41,7 @@ Six layers, all bilingual. The two cost-effective layers carry **live unit price
 3. **Data sources** → [`sources.md`](sources.md)
 
 <!-- LATEST_DAILY -->
-> 📄 最近更新 / Latest changelog：[`daily/2026-11-24.md`](daily/2026-11-24.md)
+> 📄 最近更新 / Latest changelog：[`daily/2026-11-26.md`](daily/2026-11-26.md)
 <!-- /LATEST_DAILY -->
 
 ## 更新节奏 / Update cadence
